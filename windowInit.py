@@ -16,7 +16,7 @@ def operationBtnsLayoutInit():
     
     #file manip
     tempComboFile = QComboBox()
-    tempListFileManip = ["File manip",
+    tempListFileManip = ["File manipulation",
                          "Open file",
                          "Save as",
                          "Exit",
@@ -180,7 +180,7 @@ def windowInitGui():
     win = QWidget()
     
     win.showMaximized()
-    win.setWindowTitle("BP")
+    win.setWindowTitle("BP System image processing")
     
     winLayout = windowLayout()
     

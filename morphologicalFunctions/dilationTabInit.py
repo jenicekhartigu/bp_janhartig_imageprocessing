@@ -69,7 +69,8 @@ def dilationWidgetInit(disAreas, logDisp):
             kernel = cv.getStructuringElement(cv.MORPH_RECT,(size,size))
         
         try:
-            dilateArray = cv.dilate(inputImage[-1],kernel,iterations = iterations)
+            # dilateArray = cv.dilate(inputImage[-1],kernel,iterations = iterations)
+            dilateArray = cv.dilate(inputImage[-1],kernel,iterations= iterations)
             
             dilateImg = Image.fromarray(dilateArray, "RGB")
                     
@@ -99,7 +100,7 @@ def dilationWidgetInit(disAreas, logDisp):
     sliderMatrixSize = QSlider()
     sliderMatrixSize = QSlider(Qt.Horizontal, objectName = "matrixSize")
     sliderMatrixSize.setMinimum(1)
-    sliderMatrixSize.setMaximum(25)
+    sliderMatrixSize.setMaximum(50)
     sliderMatrixSize.setTickInterval(1)
     sliderMatrixSize.setTickPosition(QSlider.TicksBelow)
     sliderMatrixSize.valueChanged.connect(iterationsSliderChange)
@@ -111,7 +112,7 @@ def dilationWidgetInit(disAreas, logDisp):
     sliderIterations = QSlider()
     sliderIterations = QSlider(Qt.Horizontal, objectName = "iterations")
     sliderIterations.setMinimum(0)
-    sliderIterations.setMaximum(10)
+    sliderIterations.setMaximum(20)
     sliderIterations.setTickInterval(1)
     sliderIterations.setTickPosition(QSlider.TicksBelow)
     sliderIterations.valueChanged.connect(iterationsSliderChange)

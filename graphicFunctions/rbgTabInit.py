@@ -39,7 +39,7 @@ def rgbWidgetInit(disAreas, logDisp):
         pixmapImage = ImageQt.fromqpixmap(functionalAreas[2].pixmap())
         inputImage.append(np.asarray(pixmapImage))
     except:
-        logDisplay[1].append("WARNING: No image loaded")
+        globalFunc.logDialog("WARNING: Není načten obrázek")
             
     def getValueDisplayValues():
         r = int(rgbValueDisplay[0].toPlainText())
@@ -151,7 +151,7 @@ def rgbWidgetInit(disAreas, logDisp):
             functionalAreas[2].setPixmap(selectedColorPixmap)
             
         except:
-            functionalAreas[2].setText("No loaded image")
+            functionalAreas[2].setText("WARNING: ???")
 
     def deleteItemsOfLayout(all):
         hexName = QObject().sender().objectName()
@@ -194,10 +194,10 @@ def rgbWidgetInit(disAreas, logDisp):
             
             tolerance = QLabel(f"Threshold {toleranceSlider.value()}")
             
-            showColorBtn = QPushButton("Show selected", objectName = actualColorName)
+            showColorBtn = QPushButton("Zobraz", objectName = actualColorName)
             showColorBtn.clicked.connect(showSelectedColor)
             
-            deleteLayoutBtn = QPushButton("Remove color", objectName = actualColorName)
+            deleteLayoutBtn = QPushButton("Odstraň", objectName = actualColorName)
             deleteLayoutBtn.clicked.connect(deleteItemsOfLayout)
             
             colorPanel.addWidget(color)
@@ -214,7 +214,6 @@ def rgbWidgetInit(disAreas, logDisp):
                 actualImage = ImageQt.fromqpixmap(functionalAreas[2].pixmap())
                 selectedColorPILDict.update({actualColorName:actualImage})
             except:
-                functionalAreas[2].setText("No loaded image")
                 selectedColorPILDict.update({actualColorName:None})
             
     def setToDefault():
@@ -242,13 +241,13 @@ def rgbWidgetInit(disAreas, logDisp):
                 mergedfile.paste(selectedColorPILDict[i], (0,0), mask = selectedColorPILDict[i])
                 
             if mergedfile == None:
-                globalFunc.logDialog("ERR: Layers cant be merged")
+                globalFunc.logDialog("ERR: Vrstvy nemohou být sloučeny")
             else:
                 pixmap = imgToPixmap(mergedfile)
                 functionalAreas[2].setPixmap(pixmap)
                 globalFunc.addImageDict("rgbMerge")
         except:
-            globalFunc.logDialog("ERR: During merging selected layers")
+            globalFunc.logDialog("ERR: Chyba v pruběhu spojování vrstev")
             
 
     #Layouts   
@@ -269,17 +268,17 @@ def rgbWidgetInit(disAreas, logDisp):
     gLabel = QLabel("Green part")
     bLabel = QLabel("Blue part")
     
-    hexValue = QLabel("Hexadecimal Value")
+    hexValue = QLabel("Hexadecimal hodnota")
     toleranceValue = QLabel("Tolerance")
     
-    rgbColorLabel = QLabel(" Picked color")
-    addBtn = QPushButton("Add selected color")
+    rgbColorLabel = QLabel(" Barva")
+    addBtn = QPushButton("Přidej barvu")
     
-    emptyLabel = QLabel("tady")
+    emptyLabel = QLabel("")
     
     #Buttons
-    discardBtn = QPushButton("Discard")
-    mergeBtn = QPushButton("Merge")
+    discardBtn = QPushButton("Zahodit")
+    mergeBtn = QPushButton("Sloučit")
     
     addBtn.clicked.connect(addColorToList)
     

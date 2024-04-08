@@ -1,5 +1,5 @@
 
-import random
+import math
 import re
 from matplotlib.pyplot import imshow
 import numpy as np
@@ -44,18 +44,76 @@ def hsvWidgetInit(disAreas, logDisp):
 
     except: 
         print("no image")
+        
+        
+    def hsv_to_rgb(hue, saturation, value):
+        hue = hue / 360.0
+        saturation = saturation / 100.0
+        value = value / 100.0
+        
+        
+
+        C = value * saturation
+        X = C * (1 - abs(hue * 6 % 2 - 1))
+        m = value - C
+
+        if hue < 1 / 6:
+            R, G, B = C, X, 0
+        elif hue < 1 / 3:
+            R, G, B = X, C, 0
+        elif hue < 1 / 2:
+            R, G, B = 0, C, X
+        elif hue < 2 / 3:
+            R, G, B = 0, X, C
+        elif hue < 5 / 6:
+            R, G, B = X, 0, C
+        else:
+            R, G, B = C, 0, X
+
+        R = (R + m) * 255
+        G = (G + m) * 255
+        B = (B + m) * 255
+
+        return int(R), int(G), int(B)
+    
+    def rgb_to_hsv(red, green, blue):
+        red = red / 255.0
+        green = green / 255.0
+        blue = blue / 255.0
+
+        Cmax = max(red, green, blue)
+        Cmin = min(red, green, blue)
+        delta = Cmax - Cmin
+
+        if delta == 0:
+            hue = 0
+        elif Cmax == red:
+            hue = (((green - blue) / delta) % 6) * 60
+        elif Cmax == green:
+            hue = (((blue - red) / delta) + 2) * 60
+        else:
+            hue = (((red - green) / delta) + 4) * 60
+
+        if hue < 0:
+            hue += 360
+
+        if Cmax == 0:
+            saturation = 0
+        else:
+            saturation = (delta / Cmax) * 100
+
+        value = Cmax * 100
+
+        return round(hue, 2), round(saturation, 2), round(value, 2)
             
     def getValueDisplayValues():
-        r = int(hsvValueDisplay[0].toPlainText())
-        g = int(hsvValueDisplay[1].toPlainText())
-        b = int(hsvValueDisplay[2].toPlainText())
+        h = int(hsvValueDisplay[0].toPlainText())
+        s = int(hsvValueDisplay[1].toPlainText())
+        v = int(hsvValueDisplay[2].toPlainText())
         
-        hue = (int(255 * 0.3333)) % r
-        sat = (int(255 * 0.05)) % g
-        val = (int(255 * 0.05)) % b
+        rgb = hsv_to_rgb(h,s,v)
         
-        print("hsv",hue,sat,val)
-        print("rgb",r, g, b)
+        r, g, b = rgb
         
         return r, g, b
     
@@ -72,8 +130,8 @@ def hsvWidgetInit(disAreas, logDisp):
         return r, g, b
     
     def getQColor():
-        hue, sat, value = getValueDisplayValues()
-        color = QColor(hue, sat, value)
+        r, g, b = getValueDisplayValues()
+        color = QColor(r, g, b)
         return color
     
     def changeValueSliders():
@@ -89,21 +147,22 @@ def hsvWidgetInit(disAreas, logDisp):
         if senderName == "value":
             hsvValueDisplay[2].setText(str(sender.value()))
             hsvValueDisplay[2].setAlignment(Qt.AlignRight)
-        
-        try:
-            hue, sat, value = getValueDisplayValues()
-            hsvSliders[0].setValue(hue)
-            hsvSliders[1].setValue(sat)
-            hsvSliders[2].setValue(value)
-    
-            hexValueDisplay.setText(hsv_to_hex())
-    
-            color = getQColor()
-            hsvColorLabel.setStyleSheet("background-color: {}".format(color.name()))
             
-            filterSettedValues()
-        except:
-            None
+ 
+        # try:
+        #     hue, sat, value = getValueDisplayValues()
+        #     hsvSliders[0].setValue(hue)
+        #     hsvSliders[1].setValue(sat)
+        #     hsvSliders[2].setValue(value)
+    
+        #     hexValueDisplay.setText(hsv_to_hex())
+    
+        #     color = getQColor()
+        #     hsvColorLabel.setStyleSheet("background-color: {}".format(color.name()))
+            
+        #     filterSettedValues()
+        # except:
+        #     None
         
     def changeValueHex():
         try:
@@ -261,7 +320,7 @@ def hsvWidgetInit(disAreas, logDisp):
     hsvColorLabel = QLabel(" Picked color")
     addBtn = QPushButton("Add selected color")
     
-    emptyLabel = QLabel("tady")
+    emptyLabel = QLabel("")
     
     #Buttons
     discardBtn = QPushButton("Discard")
@@ -280,8 +339,8 @@ def hsvWidgetInit(disAreas, logDisp):
     #setting diferetn boundries for hsv sliders
     #HUE
     hSlider = QSlider(Qt.Horizontal, objectName = "hue")
-    hSlider.setMinimum(1)
-    hSlider.setMaximum(359)
+    hSlider.setMinimum(0)
+    hSlider.setMaximum(355)
     hSlider.setTickPosition(QSlider.TicksBelow)
     hSlider.valueChanged.connect(changeValueSliders)
     hsvSliders.append(hSlider)
@@ -296,8 +355,8 @@ def hsvWidgetInit(disAreas, logDisp):
     
     #SAT
     sSlider = QSlider(Qt.Horizontal, objectName = "sat")
-    sSlider.setMinimum(1)
-    sSlider.setMaximum(99)
+    sSlider.setMinimum(0)
+    sSlider.setMaximum(100)
     sSlider.setTickPosition(QSlider.TicksBelow)
     sSlider.valueChanged.connect(changeValueSliders)
     hsvSliders.append(sSlider)
@@ -305,8 +364,8 @@ def hsvWidgetInit(disAreas, logDisp):
     #VALUE
     
     vSlider = QSlider(Qt.Horizontal, objectName = "value")
-    vSlider.setMinimum(1)
-    vSlider.setMaximum(99)
+    vSlider.setMinimum(0)
+    vSlider.setMaximum(100)
     vSlider.setTickPosition(QSlider.TicksBelow)
     vSlider.valueChanged.connect(changeValueSliders)
     hsvSliders.append(vSlider)

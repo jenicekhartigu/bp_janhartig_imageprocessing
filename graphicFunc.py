@@ -18,7 +18,7 @@ from geometricFunctions.rotateTabInit           import rotateWidgetInit
 from geometricFunctions.shiftingTabInit         import shiftingWidgetInit
 from geometricFunctions.perspectiveTabInit      import perspectiveWidgetInit
 
-from thresholdingFunctions.adaptiveThreshTabInit import adaptiveThreshWidgetInit
+from thresholdingFunctions.meanThreshTabInit import meanThreshWidgetInit
 from thresholdingFunctions.gaussianThreshTabInit import gaussianThreshWidgetInit
 from thresholdingFunctions.convolutionTabInit    import convolutionWidgetInit
 from thresholdingFunctions.averagingTabInit      import averagingWidgetInit
@@ -46,10 +46,10 @@ def colorSpaceTabsInit():
     ycbcrWidget = ycbcrWidgetInit(functionalAreas)
     grayWidget = grayWidgetInit(functionalAreas, logDisplay)
     
+    colorSpaceTabs.append(grayWidget)
     colorSpaceTabs.append(rgbWidget)
     colorSpaceTabs.append(hsvWidget)
     colorSpaceTabs.append(ycbcrWidget)
-    colorSpaceTabs.append(grayWidget)
     
     return colorSpaceTabs
 
@@ -67,14 +67,14 @@ def geometricTabsInit():
 
 def trehsholdingTabsInit():
     trehsholdingTabs = []
-    adaptiveThreshWidget = adaptiveThreshWidgetInit(functionalAreas, logDisplay)
+    meanThreshWidget = meanThreshWidgetInit(functionalAreas, logDisplay)
     gaussianThreshWidget = gaussianThreshWidgetInit(functionalAreas, logDisplay)
     convolutionWidget = convolutionWidgetInit(functionalAreas, logDisplay)
     averagingWidget = averagingWidgetInit(functionalAreas, logDisplay)
     gausianWidget = gaussianWidgetInit(functionalAreas, logDisplay)
     medianWidget = medianWidgetInit(functionalAreas, logDisplay)
     
-    trehsholdingTabs.append(adaptiveThreshWidget)
+    trehsholdingTabs.append(meanThreshWidget)
     trehsholdingTabs.append(gaussianThreshWidget)
     trehsholdingTabs.append(convolutionWidget)
     trehsholdingTabs.append(averagingWidget)
@@ -106,10 +106,10 @@ def functionHandling(choice):
     #color spaces
     if choice == 0:
         colorSpaceTabs = colorSpaceTabsInit()
-        colorSpaceTabNames = ["RGB",
+        colorSpaceTabNames = ["Gray",
+                              "RGB",
                               "HSV",
-                              "YCbCr",
-                              "Gray"
+                              "YCbCr"
                               ]
         
         for i in range(len(colorSpaceTabs)):
@@ -128,7 +128,7 @@ def functionHandling(choice):
         
     elif choice == 2:
         trehsholdingTabs = trehsholdingTabsInit()
-        trehsholdingTabNames = ["Adaptive thresholding",
+        trehsholdingTabNames = ["Mean thresholding",
                                 "Gaussian thresholding",
                                 "Convolution smoothing",
                                 "Averaging smoothing",

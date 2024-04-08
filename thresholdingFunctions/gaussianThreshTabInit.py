@@ -85,7 +85,7 @@ def gaussianThreshWidgetInit(disAreas, logDisp):
     
     settingBox.addWidget(sliderMatrixSize)
     
-    settingBox.addWidget(QLabel("empty"),2)
+    settingBox.addWidget(QLabel(""),2)
     
     #maip buttns init
     gaussianThreshManipBtns = QBoxLayout(0)

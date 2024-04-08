@@ -1,3 +1,4 @@
+import math
 import numpy as np
 import cv2 as cv
 
@@ -53,7 +54,7 @@ def perspectiveWidgetInit(disAreas, logDisp):
         actualSize[0] = wid
         actualSize[1] = hei  
     except:
-        globalFunc.logDialog("WARNING: No image loaded")
+        globalFunc.logDialog("WARNING: Není načten obrázek")
         
     def changeValueSlider():
         sender = QObject().sender()
@@ -103,6 +104,11 @@ def perspectiveWidgetInit(disAreas, logDisp):
             point3[0], point3[1] = pr3
             point4[0], point4[1] = pr2
             
+            # print("P1",point1)
+            # print("P2",point2)
+            # print("P3",point3)
+            # print("P4",point4)
+            
             font = cv.FONT_HERSHEY_SIMPLEX
             
             cv.circle(mask,pr1,5,(255,0,0,255),-1)
@@ -117,7 +123,7 @@ def perspectiveWidgetInit(disAreas, logDisp):
             cv.circle(mask,pr4,5,(255,0,0,255),-1)
             cv.putText(mask,str(pr4),pr4,font,0.5,(0,0,0,255),1,cv.LINE_AA)
         except:
-            globalFunc.logDialog("WARNING: Intersections")
+            globalFunc.logDialog("WARNING: Chyba v zadání přímek")
         
         mask = mask[:]
         imgMask = Image.fromarray(mask, "RGBA")
@@ -145,6 +151,8 @@ def perspectiveWidgetInit(disAreas, logDisp):
         pr2 = findIntersection(rightSide, bottomSide)
         pr3 = findIntersection(leftSide, bottomSide)
         pr4 = findIntersection(rightSide, topSide)
+        
+        
 
         return pr1, pr2, pr3, pr4
 
@@ -171,21 +179,43 @@ def perspectiveWidgetInit(disAreas, logDisp):
         sliderYL2.setValue(0)
         sliderYR1.setValue(0)
         sliderYR2.setValue(0)
+        
+    def distance(point1, point2):
+        x1, y1 = point1
+        x2, y2 = point2
+
+        delta_x = x2 - x1
+        delta_y = y2 - y1
+
+        distance = int(math.sqrt(delta_x**2 + delta_y**2))
+
+        return distance
 
     def tryFitToRectagle():
         try:
+            wid = max(distance(point1, point2),distance(point3, point4))
+            
+            hei = max(distance(point1, point3),distance(point2, point4))
+            
+            print(wid, hei)
+            
+            
+            
+            
+            
+            
             pts1 = np.float32([point1,point2,point3,point4])
-            pts2 = np.float32([[0,0],[300,0],[0,300],[300,300]])
+            pts2 = np.float32([[0,0],[wid,0],[0,hei],[wid,hei]])
     
             M = cv.getPerspectiveTransform(pts1,pts2)
             
-            dst = cv.warpPerspective(inputImage[-1],M,(300,300))
+            dst = cv.warpPerspective(inputImage[-1],M,(wid,hei))
             
             pixmap = imgToPixmap(Image.fromarray(dst, "RGB"))
             
             functionalAreas[2].setPixmap(pixmap)
         except:
-            globalFunc.logDialog("ERR: Probably no image cant be fitted")
+            globalFunc.logDialog("ERR: Operace nemuže byt provedena")
         
     def saveChanges():
         globalFunc.addImageDict("perspective")
@@ -198,7 +228,7 @@ def perspectiveWidgetInit(disAreas, logDisp):
         hei = 0
         wid = 0
         
-        globalFunc.logDialog("ERR: No image loaded")
+        globalFunc.logDialog("WARNING: Není načten obrázek")
         
     sliderXval = int(wid*2)
     sliderYval = int(hei*2)
@@ -263,16 +293,16 @@ def perspectiveWidgetInit(disAreas, logDisp):
     sliderYR2.setTickPosition(QSlider.TicksBelow)
     sliderYR2.valueChanged.connect(changeValueSlider)
     
-    slidersBox.addWidget(QLabel("Cyan line"))
+    slidersBox.addWidget(QLabel("Cyan"))
     slidersBox.addWidget(sliderXT1)
     slidersBox.addWidget(sliderXB1)
-    slidersBox.addWidget(QLabel("Magenta line"))
+    slidersBox.addWidget(QLabel("Magenta"))
     slidersBox.addWidget(sliderYL1)
     slidersBox.addWidget(sliderYR1)
-    slidersBox.addWidget(QLabel("Yellow line"))
+    slidersBox.addWidget(QLabel("Yellow"))
     slidersBox.addWidget(sliderXT2)
     slidersBox.addWidget(sliderXB2)
-    slidersBox.addWidget(QLabel("Black line"))
+    slidersBox.addWidget(QLabel("Black"))
     slidersBox.addWidget(sliderYL2)
     slidersBox.addWidget(sliderYR2)
     
@@ -296,9 +326,9 @@ def perspectiveWidgetInit(disAreas, logDisp):
     #maip buttns init
     perspectiveManipBtns = QBoxLayout(0)
     
-    discardBtn = QPushButton("Discard")
-    tryFitBtn = QPushButton("Try fit")
-    saveBtn = QPushButton("Save")
+    discardBtn = QPushButton("Zahodit")
+    tryFitBtn = QPushButton("Provést")
+    saveBtn = QPushButton("Uložit")
     
     discardBtn.clicked.connect(setToDefault)
     tryFitBtn.clicked.connect(tryFitToRectagle)

@@ -42,7 +42,7 @@ def openingWidgetInit(disAreas, logDisp):
         inputImage.append(fromArray)
 
     except:
-        globalFunc.logDialog("WARNING: No image loaded")    
+        globalFunc.logDialog("WARNING: Není načten obrázek")      
     
         
     def iterationsSliderChange():
@@ -75,7 +75,7 @@ def openingWidgetInit(disAreas, logDisp):
                     
             functionalAreas[2].setPixmap(imgToPixmap(openingImg))
         except:
-            globalFunc.logDialog("ERR: Dilation on image cant be proceed")
+            globalFunc.logDialog("ERR: Operace otevreni nemuze byt provedena")
             
         return None
         
@@ -94,7 +94,7 @@ def openingWidgetInit(disAreas, logDisp):
     
     openingSettingBox = QBoxLayout(2)
     
-    openingSettingBox.addWidget(QLabel("Set size of matrix for opening"))
+    openingSettingBox.addWidget(QLabel("Velikost matice pro operaci otevreni"))
     
     sliderMatrixSize = QSlider()
     sliderMatrixSize = QSlider(Qt.Horizontal, objectName = "matrixSize")
@@ -106,7 +106,7 @@ def openingWidgetInit(disAreas, logDisp):
     
     openingSettingBox.addWidget(sliderMatrixSize)
     
-    openingSettingBox.addWidget(QLabel("Set number of iterations for opening (erosion followed by dilation)"))
+    openingSettingBox.addWidget(QLabel("Pocet iteraci pro operaci otevreni (eroze nasledována dilataci)"))
     
     sliderIterations = QSlider()
     sliderIterations = QSlider(Qt.Horizontal, objectName = "iterations")
@@ -118,16 +118,16 @@ def openingWidgetInit(disAreas, logDisp):
     
     openingSettingBox.addWidget(sliderIterations)
     
-    openingSettingBox.addWidget(QLabel("Choose matrix patern for opening"))
+    openingSettingBox.addWidget(QLabel("Vyber vzor násobícího jádra"))
     
-    square = QRadioButton("Square",objectName = "square")
+    square = QRadioButton("Čtverec",objectName = "square")
     square.clicked.connect(buttonChange)
     square.setChecked(True)
     
-    ellipse = QRadioButton("Ellipse",objectName = "ellipse")
+    ellipse = QRadioButton("Elipsa",objectName = "ellipse")
     ellipse.clicked.connect(buttonChange)
     
-    cross = QRadioButton("Cross", objectName = "cross")
+    cross = QRadioButton("Kříž", objectName = "cross")
     cross.clicked.connect(buttonChange)
     
     radioBtnGroup = QButtonGroup()
@@ -171,8 +171,8 @@ def openingWidgetInit(disAreas, logDisp):
     #maip buttns init
     openingManipBtns = QBoxLayout(0)
     
-    discardBtn = QPushButton("Discard")
-    saveBtn = QPushButton("Save")
+    discardBtn = QPushButton("Zahodit")
+    saveBtn = QPushButton("Uložit")
     
     discardBtn.clicked.connect(setToDefault)
     saveBtn.clicked.connect(saveChanges)

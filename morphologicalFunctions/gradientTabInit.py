@@ -40,7 +40,7 @@ def gradientWidgetInit(disAreas, logDisp):
         inputImage.append(fromArray)
 
     except:
-        globalFunc.logDialog("WARNING: No image loaded")    
+        globalFunc.logDialog("WARNING: Není načten obrázek") 
     
         
     def iterationsSliderChange():
@@ -71,7 +71,7 @@ def gradientWidgetInit(disAreas, logDisp):
             
             functionalAreas[2].setPixmap(imgToPixmap(gradientImgRgb))
         except:
-            globalFunc.logDialog("ERR: Dilation on image cant be proceed")
+            globalFunc.logDialog("ERR: operace ziskani gradientu nemuze byt provedena")
 
     def setToDefault():
         square.setChecked(True)
@@ -86,7 +86,7 @@ def gradientWidgetInit(disAreas, logDisp):
     
     gradientSettingBox = QBoxLayout(2)
     
-    gradientSettingBox.addWidget(QLabel("Set size of matrix for gradient"))
+    gradientSettingBox.addWidget(QLabel("Velikost matice pro operaci gradientu"))
     
     sliderMatrixSize = QSlider()
     sliderMatrixSize = QSlider(Qt.Horizontal, objectName = "matrixSize")
@@ -98,7 +98,7 @@ def gradientWidgetInit(disAreas, logDisp):
     
     gradientSettingBox.addWidget(sliderMatrixSize)
     
-    gradientSettingBox.addWidget(QLabel("Set number of iterations for morphological gradient (difference between dilation and erosion)"))
+    gradientSettingBox.addWidget(QLabel("Počet iterací pro operaci gradient (rozdíl mezi dlataci a erozí)"))
     
     sliderIterations = QSlider()
     sliderIterations = QSlider(Qt.Horizontal, objectName = "iterations")
@@ -110,16 +110,16 @@ def gradientWidgetInit(disAreas, logDisp):
     
     gradientSettingBox.addWidget(sliderIterations)
     
-    gradientSettingBox.addWidget(QLabel("Choose matrix patern for gradient"))
+    gradientSettingBox.addWidget(QLabel("Vyber vzor násobícího jádra"))
     
-    square = QRadioButton("Square",objectName = "square")
+    square = QRadioButton("Čtverec",objectName = "square")
     square.clicked.connect(buttonChange)
     square.setChecked(True)
     
-    ellipse = QRadioButton("Ellipse",objectName = "ellipse")
+    ellipse = QRadioButton("Elipsa",objectName = "ellipse")
     ellipse.clicked.connect(buttonChange)
     
-    cross = QRadioButton("Cross", objectName = "cross")
+    cross = QRadioButton("Kříž", objectName = "cross")
     cross.clicked.connect(buttonChange)
     
     radioBtnGroup = QButtonGroup()
@@ -162,8 +162,8 @@ def gradientWidgetInit(disAreas, logDisp):
     #maip buttns init
     gradientManipBtns = QBoxLayout(0)
     
-    discardBtn = QPushButton("Discard")
-    saveBtn = QPushButton("Save")
+    discardBtn = QPushButton("Zahodit")
+    saveBtn = QPushButton("Uložit")
     
     discardBtn.clicked.connect(setToDefault)
     saveBtn.clicked.connect(saveChanges)

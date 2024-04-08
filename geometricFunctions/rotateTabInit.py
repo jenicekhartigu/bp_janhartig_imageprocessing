@@ -1,5 +1,4 @@
-import re
-from matplotlib.pyplot import imshow
+
 import numpy as np
 import cv2 as cv
 
@@ -40,7 +39,7 @@ def rotateWidgetInit(disAreas, logDisp):
         pixmapImage = ImageQt.fromqpixmap(functionalAreas[2].pixmap())
         inputImage.append(np.asarray(pixmapImage))
     except:
-        globalFunc.logDialog("WARNING: No image loaded")
+        globalFunc.logDialog("WARNING: Není načten obrázek")
                 
     def changeValueSlider():
         sender = QObject().sender()
@@ -49,13 +48,13 @@ def rotateWidgetInit(disAreas, logDisp):
             degree = int(sender.value())
             
             if (int(sender.value()) == 0):
-                txtLabel2.setText("°[degree]")
+                txtLabel2.setText("°[stupňů]")
                 
             if (int(sender.value()) < 0):
-                txtLabel2.setText("°[degree] to left")
+                txtLabel2.setText("°[stupňů] do leva")
                 
             if (int(sender.value()) > 0):
-                txtLabel2.setText("°[degree] to right")
+                txtLabel2.setText("°[stupňů] do prava")
                 
             rotateValue.setText(str(degree))
             rotateValue.setAlignment(Qt.AlignRight)
@@ -92,7 +91,7 @@ def rotateWidgetInit(disAreas, logDisp):
             
             functionalAreas[2].setPixmap(pixmap)
         except:
-            globalFunc.logDialog("ERR: No image loaded")
+            globalFunc.logDialog("WARNING: Není načten obrázek")
         
     #LAYOUT 
     rotateWidget = QWidget(objectName = "rotate")
@@ -100,10 +99,10 @@ def rotateWidgetInit(disAreas, logDisp):
     
     labelNamesBox = QBoxLayout(0)
     # labelNamesBox.setContentsMargins(10,10,10,10)
-    rotateLeft = QLabel("Rotate left")
+    rotateLeft = QLabel("Doleva")
     rotateLeft.setAlignment(Qt.AlignLeft)
     
-    rotateRight = QLabel("Rotate right")
+    rotateRight = QLabel("Doprava")
     rotateRight.setAlignment(Qt.AlignRight)
     
     labelNamesBox.addWidget(rotateLeft)
@@ -119,14 +118,14 @@ def rotateWidgetInit(disAreas, logDisp):
     
     labelAndSetValue = QBoxLayout(0)
     
-    txtLabel = QLabel("Rotate picture ")
+    txtLabel = QLabel("Otoč obraz ")
     rotateValue = QTextEdit()
     rotateValue.setText("0")
     rotateValue.setMaximumSize(60,30)
     rotateValue.setAlignment(Qt.AlignRight)
     rotateValue.textChanged.connect(changeValueSlider)
     
-    txtLabel2 = QLabel("°[degree]")
+    txtLabel2 = QLabel("°[stupňů]")
     
     labelAndSetValue.addWidget(txtLabel)
     labelAndSetValue.addWidget(rotateValue)
@@ -138,8 +137,8 @@ def rotateWidgetInit(disAreas, logDisp):
     #maip buttns init
     rotateManipBtns = QBoxLayout(0)
     
-    discardBtn = QPushButton("Discard")
-    saveBtn = QPushButton("Save")
+    discardBtn = QPushButton("Zahodit")
+    saveBtn = QPushButton("Uložit")
     
     discardBtn.clicked.connect(setToDefault)
     saveBtn.clicked.connect(saveChanges)

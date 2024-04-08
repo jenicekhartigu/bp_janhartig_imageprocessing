@@ -24,7 +24,7 @@ def imgToPixmap(image):
     pixmap = QtGui.QPixmap.fromImage(qim)
     return pixmap
 
-def adaptiveThreshWidgetInit(disAreas, logDisp):
+def meanThreshWidgetInit(disAreas, logDisp):
     for i in disAreas:
         functionalAreas.append(i)
         
@@ -40,10 +40,10 @@ def adaptiveThreshWidgetInit(disAreas, logDisp):
         globalFunc.logDialog("WARNING: No image loaded")
         
     def matrixSize():
-        adaptiveThreshExecution(sliderMatrixSize.value())
+        meanThreshExecution(sliderMatrixSize.value())
         
         
-    def adaptiveThreshExecution(size):
+    def meanThreshExecution(size):
         try:
             if size % 2 != 0:
                 (b, g, r) = cv.split(inputImage[-1])
@@ -65,12 +65,12 @@ def adaptiveThreshWidgetInit(disAreas, logDisp):
             
         
     def saveChanges():
-        globalFunc.addImageDict("adaptiveThresh")
+        globalFunc.addImageDict("meanThresh")
         
         
     #LAYOUT 
-    adaptiveThreshWidget = QWidget(objectName = "adaptiveThresh")
-    adaptiveThreshWidgetLayout = QGridLayout()
+    meanThreshWidget = QWidget(objectName = "meanThresh")
+    meanThreshWidgetLayout = QGridLayout()
     settingBox = QBoxLayout(2)
     
     sliderLabel = QLabel("Set size of matrix for adaptive thresholding")
@@ -85,10 +85,10 @@ def adaptiveThreshWidgetInit(disAreas, logDisp):
     
     settingBox.addWidget(sliderMatrixSize)
     
-    settingBox.addWidget(QLabel("empty"),2)
+    settingBox.addWidget(QLabel(""),2)
     
     #maip buttns init
-    adaptiveThreshManipBtns = QBoxLayout(0)
+    meanThreshManipBtns = QBoxLayout(0)
     
     discardBtn = QPushButton("Discard")
     saveBtn = QPushButton("Save")
@@ -96,13 +96,13 @@ def adaptiveThreshWidgetInit(disAreas, logDisp):
     discardBtn.clicked.connect(setToDefault)
     saveBtn.clicked.connect(saveChanges)
     
-    adaptiveThreshManipBtns.addWidget(discardBtn)
-    adaptiveThreshManipBtns.addWidget(QLabel(" "))
-    adaptiveThreshManipBtns.addWidget(saveBtn)
+    meanThreshManipBtns.addWidget(discardBtn)
+    meanThreshManipBtns.addWidget(QLabel(" "))
+    meanThreshManipBtns.addWidget(saveBtn)
     
-    adaptiveThreshWidgetLayout.addWidget(sliderLabel, 0 ,0)
-    adaptiveThreshWidgetLayout.addLayout(settingBox,        1 ,0)
-    adaptiveThreshWidgetLayout.addLayout(adaptiveThreshManipBtns,2 ,0)
+    meanThreshWidgetLayout.addWidget(sliderLabel, 0 ,0)
+    meanThreshWidgetLayout.addLayout(settingBox,        1 ,0)
+    meanThreshWidgetLayout.addLayout(meanThreshManipBtns,2 ,0)
     
-    adaptiveThreshWidget.setLayout(adaptiveThreshWidgetLayout)
-    return adaptiveThreshWidget
+    meanThreshWidget.setLayout(meanThreshWidgetLayout)
+    return meanThreshWidget

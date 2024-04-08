@@ -45,7 +45,7 @@ def erosionWidgetInit(disAreas, logDisp):
         inputImage.append(fromArray)
 
     except:
-        globalFunc.logDialog("WARNING: No image loaded")    
+        globalFunc.logDialog("WARNING: Není načten obrázek")   
     
         
     def iterationsSliderChange():
@@ -78,7 +78,7 @@ def erosionWidgetInit(disAreas, logDisp):
                     
             functionalAreas[2].setPixmap(imgToPixmap(erodeImg))
         except:
-            globalFunc.logDialog("ERR: Erosion on image cant be proceed")
+            globalFunc.logDialog("ERR: Eroze nemuze byt provedena")
         
         
     def setToDefault():
@@ -96,7 +96,7 @@ def erosionWidgetInit(disAreas, logDisp):
     
     erosionSettingBox = QBoxLayout(2)
     
-    erosionSettingBox.addWidget(QLabel("Set size of matrix for erosion"))
+    erosionSettingBox.addWidget(QLabel("Velikost matice pro operaci eroze"))
     
     sliderMatrixSize = QSlider()
     sliderMatrixSize = QSlider(Qt.Horizontal, objectName = "matrixSize")
@@ -108,7 +108,7 @@ def erosionWidgetInit(disAreas, logDisp):
     
     erosionSettingBox.addWidget(sliderMatrixSize)
     
-    erosionSettingBox.addWidget(QLabel("Set number of iterations for erosion"))
+    erosionSettingBox.addWidget(QLabel("Počet iterací pro operaci eroze"))
     
     sliderIterations = QSlider()
     sliderIterations = QSlider(Qt.Horizontal, objectName = "iterations")
@@ -120,16 +120,16 @@ def erosionWidgetInit(disAreas, logDisp):
     
     erosionSettingBox.addWidget(sliderIterations)
     
-    erosionSettingBox.addWidget(QLabel("Choose matrix patern for erosion"))
+    erosionSettingBox.addWidget(QLabel("Vyber vzor násobícího jádra"))
     
-    square = QRadioButton("Square",objectName = "square")
+    square = QRadioButton("Čtverec",objectName = "square")
     square.clicked.connect(buttonChange)
     square.setChecked(True)
     
-    ellipse = QRadioButton("Ellipse",objectName = "ellipse")
+    ellipse = QRadioButton("Elipsa",objectName = "ellipse")
     ellipse.clicked.connect(buttonChange)
     
-    cross = QRadioButton("Cross", objectName = "cross")
+    cross = QRadioButton("Kříž", objectName = "cross")
     cross.clicked.connect(buttonChange)
     
     radioBtnGroup = QButtonGroup()
@@ -173,8 +173,8 @@ def erosionWidgetInit(disAreas, logDisp):
     #maip buttns init
     erosionManipBtns = QBoxLayout(0)
     
-    discardBtn = QPushButton("Discard")
-    saveBtn = QPushButton("Save")
+    discardBtn = QPushButton("Zahodit")
+    saveBtn = QPushButton("Uložit")
     
     discardBtn.clicked.connect(setToDefault)
     saveBtn.clicked.connect(saveChanges)

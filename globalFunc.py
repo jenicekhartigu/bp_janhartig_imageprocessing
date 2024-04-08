@@ -66,7 +66,7 @@ def reinitTabDictonaries():
     gaussianWidgetInit(functionalAreas, logDisplay)
     medianWidgetInit(functionalAreas, logDisplay)
     gaussianThreshWidgetInit(functionalAreas, logDisplay)
-    adaptiveThreshWidgetInit(functionalAreas, logDisplay)
+    meanThreshWidgetInit(functionalAreas, logDisplay)
     
     blackhatWidgetInit(functionalAreas, logDisplay)
     tophatWidgetInit(functionalAreas, logDisplay)
@@ -159,7 +159,7 @@ def functionSelected():
     logDialog("Function selector: " + functionalAreas[0].currentText())
     
 def showPrevious():
-    # try:
+    try:
         global index
         if index == -1:
             print("Slovník je prázdný.")
@@ -168,13 +168,15 @@ def showPrevious():
         else:
             index -= 1
             findPixmapInDict(index)
+            
+        logDialog("Showing previous change")
                 
-    # except:
-    #     logDialog("RR: Durign showHistory()")
+    except:
+        logDialog("ERR: Durign showHistory()")
 
 
 def showNext():
-    # try:
+    try:
         global index
         if index == len(imageDict) - 1:
             print("Dosáhli jste na poslední prvek")
@@ -183,11 +185,12 @@ def showNext():
         else:
             index += 1
             findPixmapInDict(index)
+            
+        logDialog("Showing next change")
+    except:
+        logDialog("ERR: Durign showHistory()")
 
-    # except:
-    #     logDialog("ERR: Durign showHistory()")
-
-    # logDialog("Showing next change")
+    
     
 def findPixmapInDict(index):
     for key in imageDict.keys():
@@ -241,7 +244,7 @@ def showLast():
         
         # functionalAreas[2].setPixmap(pixmap)
     except:
-        logDialog("ERR: Original cant be showed")
+        logDialog("ERR: Last cant be showed")
     
 
 def expandImage():

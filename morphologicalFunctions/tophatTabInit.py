@@ -42,7 +42,7 @@ def tophatWidgetInit(disAreas, logDisp):
         inputImage.append(fromArray)
 
     except:
-        globalFunc.logDialog("WARNING: No image loaded")    
+        globalFunc.logDialog("WARNING: Není načten obrázek")    
     
         
     def iterationsSliderChange():
@@ -75,7 +75,7 @@ def tophatWidgetInit(disAreas, logDisp):
                     
             functionalAreas[2].setPixmap(imgToPixmap(tophatImg))
         except:
-            globalFunc.logDialog("ERR: Dilation on image cant be proceed")
+            globalFunc.logDialog("ERR: Operace tophat nemuze byt provedena")
             
         return None
         
@@ -94,7 +94,7 @@ def tophatWidgetInit(disAreas, logDisp):
     
     tophatSettingBox = QBoxLayout(2)
     
-    tophatSettingBox.addWidget(QLabel("Set size of matrix for tophat"))
+    tophatSettingBox.addWidget(QLabel("Velikost matice pro operaci tophat"))
     
     sliderMatrixSize = QSlider()
     sliderMatrixSize = QSlider(Qt.Horizontal, objectName = "matrixSize")
@@ -106,7 +106,7 @@ def tophatWidgetInit(disAreas, logDisp):
     
     tophatSettingBox.addWidget(sliderMatrixSize)
     
-    tophatSettingBox.addWidget(QLabel("Set number of iterations for tophat (difference between input image and opening operation)"))
+    tophatSettingBox.addWidget(QLabel("Počet iterací pro operaci tophat (rozdíl mezi vstupním obrazem a otevřením)"))
     
     sliderIterations = QSlider()
     sliderIterations = QSlider(Qt.Horizontal, objectName = "iterations")
@@ -118,16 +118,16 @@ def tophatWidgetInit(disAreas, logDisp):
     
     tophatSettingBox.addWidget(sliderIterations)
     
-    tophatSettingBox.addWidget(QLabel("Choose matrix patern for tophat"))
+    tophatSettingBox.addWidget(QLabel("Vyber vzor násobícího jádra"))
     
-    square = QRadioButton("Square",objectName = "square")
+    square = QRadioButton("Čtverec",objectName = "square")
     square.clicked.connect(buttonChange)
     square.setChecked(True)
     
-    ellipse = QRadioButton("Ellipse",objectName = "ellipse")
+    ellipse = QRadioButton("Elipsa",objectName = "ellipse")
     ellipse.clicked.connect(buttonChange)
     
-    cross = QRadioButton("Cross", objectName = "cross")
+    cross = QRadioButton("Kříž", objectName = "cross")
     cross.clicked.connect(buttonChange)
     
     radioBtnGroup = QButtonGroup()
@@ -171,8 +171,8 @@ def tophatWidgetInit(disAreas, logDisp):
     #maip buttns init
     tophatManipBtns = QBoxLayout(0)
     
-    discardBtn = QPushButton("Discard")
-    saveBtn = QPushButton("Save")
+    discardBtn = QPushButton("Zahodit")
+    saveBtn = QPushButton("Uložit")
     
     discardBtn.clicked.connect(setToDefault)
     saveBtn.clicked.connect(saveChanges)

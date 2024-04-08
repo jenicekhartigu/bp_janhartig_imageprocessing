@@ -41,7 +41,7 @@ def shiftingWidgetInit(disAreas, logDisp):
         
         actualSize[0] = [wid, hei]      
     except:
-        None 
+        globalFunc.logDialog("WARNING: Není načten obrázek")
         
     #Functions
     def changeValueSlider():
@@ -75,10 +75,9 @@ def shiftingWidgetInit(disAreas, logDisp):
             
             hei, wid, z = np.asarray(pixmapImage).shape
             actualSize[0] = [hei, wid]
-            print(actualSize)
             
         except:
-            globalFunc.logDialog("ERR: Cant get data of size")
+            globalFunc.logDialog("ERR: Nemohu získat velikost obrazu")
 
     def setToDefault():
         heiValue.setText("0")
@@ -99,8 +98,8 @@ def shiftingWidgetInit(disAreas, logDisp):
             
             img = inputImage[-1]
             
-            heiValueLabel.setText("Shifted for "+str(abs(int(hei*hei1)))+ " pixels")
-            widValueLabel.setText("Shifted for "+str(abs(int(wid*wid1)))+ " pixels")
+            heiValueLabel.setText("Posunutý o "+str(abs(int(hei*hei1)))+ " pixelu")
+            widValueLabel.setText("/osunutý o "+str(abs(int(wid*wid1)))+ " pixelu")
             heiValueLabel.setAlignment(Qt.AlignRight)
             widValueLabel.setAlignment(Qt.AlignRight)
             
@@ -110,7 +109,7 @@ def shiftingWidgetInit(disAreas, logDisp):
             pixmap = imgToPixmap(Image.fromarray(dst, "RGB"))
             functionalAreas[2].setPixmap(pixmap)
         except:
-            globalFunc.logDialog("ERR: Image cant be shifted")
+            globalFunc.logDialog("ERR: Obrazek nemuze byt posunut")
           
     #LAYOUT
     shiftingWidget = QWidget(objectName = "shifting")
@@ -126,8 +125,8 @@ def shiftingWidgetInit(disAreas, logDisp):
     heiLabelBox = QBoxLayout(0)
     heiValueBox = QBoxLayout(0)
     #first row in box
-    heiLabel = QLabel("Height slider")
-    heiValueLabel = QLabel("pixels")
+    heiLabel = QLabel("Posuvník výšky")
+    heiValueLabel = QLabel("pixelů")
     
     heiLabelBox.addWidget(heiLabel)
     heiLabelBox.addWidget(heiValueLabel, 0, Qt.AlignRight)
@@ -154,8 +153,8 @@ def shiftingWidgetInit(disAreas, logDisp):
     widLabelBox = QBoxLayout(0)
     widValueBox = QBoxLayout(0)
     #first row in box
-    widLabel = QLabel("Width slider")
-    widValueLabel = QLabel("pixels")
+    widLabel = QLabel("Posuvník šířky")
+    widValueLabel = QLabel("pixelů")
     
     widLabelBox.addWidget(widLabel)
     widLabelBox.addWidget(widValueLabel, 0, Qt.AlignRight)
@@ -185,14 +184,14 @@ def shiftingWidgetInit(disAreas, logDisp):
     widMainBox.addLayout(widLabelBox)
     widMainBox.addLayout(widValueBox)
     
-    getPixelsBtn = QPushButton("Get size of actual picture")
+    getPixelsBtn = QPushButton("Získej rozměry")
     getPixelsBtn.clicked.connect(getPixelsOfPixmap)
     
     #maip buttns init
     shiftingManipBtns = QBoxLayout(0)
     
-    discardBtn = QPushButton("Discard")
-    saveBtn = QPushButton("Save")
+    discardBtn = QPushButton("Zahodit")
+    saveBtn = QPushButton("Uložit")
     
     discardBtn.clicked.connect(setToDefault)
     saveBtn.clicked.connect(saveChanges)

@@ -42,7 +42,7 @@ def blackhatWidgetInit(disAreas, logDisp):
         inputImage.append(fromArray)
 
     except:
-        globalFunc.logDialog("WARNING: No image loaded")    
+        globalFunc.logDialog("WARNING: Není načten obrázek")  
     
         
     def iterationsSliderChange():
@@ -75,7 +75,7 @@ def blackhatWidgetInit(disAreas, logDisp):
                     
             functionalAreas[2].setPixmap(imgToPixmap(blackhatImg))
         except:
-            globalFunc.logDialog("ERR: Dilation on image cant be proceed")
+            globalFunc.logDialog("ERR: Operace blackhat nemuze byt provedena")
             
         return None
         
@@ -94,40 +94,40 @@ def blackhatWidgetInit(disAreas, logDisp):
     
     blackhatSettingBox = QBoxLayout(2)
     
-    blackhatSettingBox.addWidget(QLabel("Set size of matrix for blackhat"))
+    blackhatSettingBox.addWidget(QLabel("Velikost matice pro operaci blackhat"))
     
     sliderMatrixSize = QSlider()
     sliderMatrixSize = QSlider(Qt.Horizontal, objectName = "matrixSize")
     sliderMatrixSize.setMinimum(1)
-    sliderMatrixSize.setMaximum(25)
+    sliderMatrixSize.setMaximum(50)
     sliderMatrixSize.setTickInterval(1)
     sliderMatrixSize.setTickPosition(QSlider.TicksBelow)
     sliderMatrixSize.valueChanged.connect(iterationsSliderChange)
     
     blackhatSettingBox.addWidget(sliderMatrixSize)
     
-    blackhatSettingBox.addWidget(QLabel("Set number of iterations for blackhat (difference between input image and opening operation)"))
+    blackhatSettingBox.addWidget(QLabel("Počet iterací pro operaci blackhat (rozdíl mezi uzavrenim a vstupním obrazem)"))
     
     sliderIterations = QSlider()
     sliderIterations = QSlider(Qt.Horizontal, objectName = "iterations")
     sliderIterations.setMinimum(0)
-    sliderIterations.setMaximum(10)
+    sliderIterations.setMaximum(20)
     sliderIterations.setTickInterval(1)
     sliderIterations.setTickPosition(QSlider.TicksBelow)
     sliderIterations.valueChanged.connect(iterationsSliderChange)
     
     blackhatSettingBox.addWidget(sliderIterations)
     
-    blackhatSettingBox.addWidget(QLabel("Choose matrix patern for blackhat"))
+    blackhatSettingBox.addWidget(QLabel("Vyber vzor násobícího jádra"))
     
-    square = QRadioButton("Square",objectName = "square")
+    square = QRadioButton("Čtverec",objectName = "square")
     square.clicked.connect(buttonChange)
     square.setChecked(True)
     
-    ellipse = QRadioButton("Ellipse",objectName = "ellipse")
+    ellipse = QRadioButton("Elipsa",objectName = "ellipse")
     ellipse.clicked.connect(buttonChange)
     
-    cross = QRadioButton("Cross", objectName = "cross")
+    cross = QRadioButton("Kříž", objectName = "cross")
     cross.clicked.connect(buttonChange)
     
     radioBtnGroup = QButtonGroup()
@@ -171,8 +171,8 @@ def blackhatWidgetInit(disAreas, logDisp):
     #maip buttns init
     blackhatManipBtns = QBoxLayout(0)
     
-    discardBtn = QPushButton("Discard")
-    saveBtn = QPushButton("Save")
+    discardBtn = QPushButton("Zahodit")
+    saveBtn = QPushButton("Uložit")
     
     discardBtn.clicked.connect(setToDefault)
     saveBtn.clicked.connect(saveChanges)
