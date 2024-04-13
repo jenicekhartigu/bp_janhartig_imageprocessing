@@ -1,4 +1,0 @@
-Gray zadavani s vyberem modelu a prevedeni dane vrstvy na stupne sedi
-HSV zadavani a YCBCR zadavani
-
-template matching
